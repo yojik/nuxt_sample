@@ -19,6 +19,9 @@
         >
           GitHub
         </a>
+        <nuxt-link
+         class="button--grey"
+         to="/sample">Sample</nuxt-link>
       </div>
     </div>
   </div>
