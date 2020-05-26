@@ -1,4 +1,4 @@
-# sample1 test
+# nuxtsample
 
 > sample
 
