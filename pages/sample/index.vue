@@ -8,9 +8,9 @@
           <a id="myEnterARButton"  href="#">AR</a>
           <a id="myEnterARButton" href="#">Exit AR</a>
         </div>
-        <!-- <iframe class="youtube" id="ytplayer" type="text/html" width="240" height="160"
+        <iframe class="youtube" id="ytplayer" type="text/html" width="240" height="160"
   src="https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&origin=http://example.com"
-  frameborder="0"></iframe> -->
+  frameborder="0"></iframe>
     </div>
     <!--App.vueのtemplate内に記述-->
     <a-scene
