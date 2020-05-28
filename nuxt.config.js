@@ -14,6 +14,9 @@ export default {
         content: process.env.npm_package_description || ''
       }
     ],
+    script: [
+      { src: 'https://cdn.jsdelivr.net/gh/aframevr/aframe@a326cebe05da7541fb885ed0ce8e16facad7d5bd/dist/aframe-master.min.js' }
+    ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
   /*
