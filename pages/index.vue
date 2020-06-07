@@ -4,7 +4,7 @@
       <logo />
       <h1 class="title">
         sample1
-      </h1>
+        </h1>
       <h2 class="subtitle">
         sample
       </h2>
@@ -22,6 +22,10 @@
         <nuxt-link
          class="button--grey"
          to="/sample">Sample</nuxt-link>
+        <nuxt-link
+         class="button--grey"
+         to="/sample2">Sample2</nuxt-link>
+
       </div>
     </div>
   </div>

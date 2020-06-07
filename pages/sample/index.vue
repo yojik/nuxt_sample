@@ -3,7 +3,7 @@
     <div class="overlayStyle" id="overlay"> <!--オーバーレイコントロールはフルスクリーンにすると消える問題あり-->
         <div>
           <a id="myEnterVRButton"  href="#">VR</a>
-          <a id="myEnterARButton"  href="#">AR</a>
+          <a id="myEnterARButton"  href="#"> AR</a>
           <a id="myEnterARButton" href="#">Exit AR</a>
         </div>
         <iframe class="youtube" id="ytplayer" type="text/html" width="240" height="160"
