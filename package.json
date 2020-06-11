@@ -5,6 +5,7 @@
   "author": "yojik",
   "private": true,
   "scripts": {
+    "server": "npm run build && node ./server/index.js",
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
@@ -16,7 +17,10 @@
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/dotenv": "^1.4.0",
     "@nuxtjs/pwa": "^3.0.0-0",
-    "nuxt": "^2.0.0"
+    "nuxt": "^2.0.0",
+    "buffered-interpolation": "^0.2.5",
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^2.0.0",
