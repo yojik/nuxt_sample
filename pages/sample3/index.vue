@@ -3,8 +3,8 @@
 
     <div class="overlayStyle" id="overlay">
       <div>
-        <h2>network</h2>
-        <button id="myEnterVRButton" href="#">VR</button>
+        <h2>networked</h2>
+        <button id="myEnterVRButton" href="#"> VR </button>
         <button id="myEnterARButton" href="#"> AR </button>
         <button id="myEnterARButton" href="#">Exit AR</button>
       </div>
@@ -12,6 +12,7 @@
 
 
     <a-scene
+      networked-scene
       webxr="optionalFeatures: dom-overlay; overlayElement: #overlay"
       vr-mode-ui="enterARButton: #myEnterARButton"
     >
