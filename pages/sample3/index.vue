@@ -10,9 +10,8 @@
       </div>
     </div>
 
-
     <a-scene
-      networked-scene
+      networked-scene=" app: myApp; room: room1; debug: true;"
       webxr="optionalFeatures: dom-overlay; overlayElement: #overlay"
       vr-mode-ui="enterARButton: #myEnterARButton"
     >
@@ -21,6 +20,38 @@
           id="floor"
           src="/low_poly_isometric_rooms/scene.gltf"
         ></a-asset-item>
+        <template id="avatar-template">
+    <a-entity class="avatar">
+      <a-sphere class="head"
+        color="#5985ff"
+        scale="0.45 0.5 0.4"
+      ></a-sphere>
+      <a-entity class="face"
+        position="0 0.05 0"
+      >
+        <a-sphere class="eye"
+          color="#efefef"
+          position="0.16 0.1 -0.35"
+          scale="0.12 0.12 0.12"
+        >
+          <a-sphere class="pupil"
+            color="#000"
+            position="0 0 -1"
+            scale="0.2 0.2 0.2"
+          ></a-sphere>
+        </a-sphere>
+        <a-sphere class="eye"
+          color="#efefef"
+          position="-0.16 0.1 -0.35"
+          scale="0.12 0.12 0.12"
+        >
+          <a-sphere class="pupil"
+            color="#000"
+            position="0 0 -1"
+            scale="0.2 0.2 0.2"
+          ></a-sphere>
+        </a-sphere>
+        </template>
       </a-assets>
 
       <a-gltf-model
@@ -28,12 +59,16 @@
         scale="2 1 2"
         src="#floor"
       ></a-gltf-model>
-
       <a-text
         position="-1 1.25 -3"
         value="Hello, World!"
         color="green"
       ></a-text>
+
+      <a-entity id="player"
+         position="0 1.3 0 "
+         networked="template:#avatar-template; attachTemplateToLocal:false;"
+         camera wasd-controls look-controls>
 
       <a-sky color="#ECECEC"></a-sky>
     </a-scene>
@@ -41,7 +76,30 @@
 </template>
 <script>
 // import "aframe";
-export default {};
+export default {
+  name: 'app',
+  components: {
+  },
+  mounted(){
+    this.$nextTick(() => {
+      console.log(document.getElementById("avatar-template"))
+      window.NAF.schemas.add({
+        template: '#avatar-template',
+        components: [
+          'position',
+          'rotation',
+          {
+            selector: '.head',
+            component: 'material',
+            property: 'color'
+          }
+        ]
+      })
+    })
+  }
+
+
+};
 </script>
 
 <style>
