@@ -25,6 +25,9 @@
         <nuxt-link
          class="button--grey"
          to="/sample2">Sample2</nuxt-link>
+        <nuxt-link
+         class="button--grey"
+         to="/sample3">Sample3</nuxt-link>
 
       </div>
     </div>
