@@ -46,7 +46,6 @@
 </template>
 
 <script>
-// import "aframe";
 export default {};
 </script>
 

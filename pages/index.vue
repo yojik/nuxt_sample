@@ -4,7 +4,7 @@
       <logo />
       <h1 class="title">
         sample1
-        </h1>
+      </h1>
       <h2 class="subtitle">
         sample
       </h2>
@@ -19,29 +19,24 @@
         >
           GitHub
         </a>
-        <nuxt-link
-         class="button--grey"
-         to="/sample">Sample</nuxt-link>
-        <nuxt-link
-         class="button--grey"
-         to="/sample2">Sample2</nuxt-link>
-        <nuxt-link
-         class="button--grey"
-         to="/sample3">Sample3</nuxt-link>
+        <nuxt-link class="button--grey" to="/sample">Sample</nuxt-link>
+        <nuxt-link class="button--grey" to="/sample2">Sample2</nuxt-link>
+        <nuxt-link class="button--grey" to="/sample3">Sample3</nuxt-link>
 
+        <a  class="button--grey" href="/sample.html">static</a>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import Logo from "~/components/Logo.vue";
 
 export default {
   components: {
     Logo
-  },
-}
+  }
+};
 </script>
 
 <style>
@@ -55,8 +50,8 @@ export default {
 }
 
 .title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   display: block;
   font-weight: 300;
   font-size: 100px;
