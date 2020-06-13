@@ -78,15 +78,12 @@
   </div>
 </template>
 <script>
-// import "aframe";
 export default {
-  name: 'app',
+  name: 'aframe',
   components: {
   },
   mounted(){
   }
-
-
 };
 </script>
 
