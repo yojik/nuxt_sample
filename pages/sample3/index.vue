@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div class="overlayStyle" id="overlay">
       <div>
         <h2>networked</h2>
@@ -85,21 +84,6 @@ export default {
   components: {
   },
   mounted(){
-    this.$nextTick(() => {
-      console.log("init NAF")
-      window.NAF.schemas.add({
-        template: '#avatar-template',
-        components: [
-          'position',
-          'rotation',
-          {
-            selector: '.head',
-            component: 'material',
-            property: 'color'
-          }
-        ]
-      })
-    })
   }
 
 
