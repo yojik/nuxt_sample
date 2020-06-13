@@ -20,35 +20,15 @@
           src="/low_poly_isometric_rooms/scene.gltf"
         ></a-asset-item>
         <naf-template id="avatar-template">
-            <a-entity class="avatar">
+		    <a-entity class="avatar">
                 <a-sphere class="head" color="#ffffff" scale="0.45 0.5 0.4"></a-sphere>
                 <a-entity class="face" position="0 0.05 0">
-                <a-sphere
-                    class="eye"
-                    color="#efefef"
-                    position="0.16 0.1 -0.35"
-                    scale="0.12 0.12 0.12"
-                >
-                    <a-sphere
-                    class="pupil"
-                    color="#000"
-                    position="0 0 -1"
-                    scale="0.2 0.2 0.2"
-                    ></a-sphere>
-                </a-sphere>
-                <a-sphere
-                    class="eye"
-                    color="#efefef"
-                    position="-0.16 0.1 -0.35"
-                    scale="0.12 0.12 0.12"
-                >
-                    <a-sphere
-                    class="pupil"
-                    color="#000"
-                    position="0 0 -1"
-                    scale="0.2 0.2 0.2"
-                    ></a-sphere>
-                </a-sphere>
+                    <a-sphere class="eye" color="#efefef" position="0.16 0.1 -0.35" scale="0.12 0.12 0.12">
+                        <a-sphere class="pupil" color="#000" position="0 0 -1" scale="0.2 0.2 0.2"></a-sphere>
+                    </a-sphere>
+                    <a-sphere class="eye" color="#efefef" position="-0.16 0.1 -0.35" scale="0.12 0.12 0.12">
+                        <a-sphere class="pupil" color="#000" position="0 0 -1" scale="0.2 0.2 0.2"></a-sphere>
+                    </a-sphere>
                 </a-entity>
             </a-entity>
         </naf-template>
@@ -64,15 +44,9 @@
         value="Hello, World!"
         color="green"
       ></a-text>
-      <a-entity
-        id="player"
-        position="0 1.3 0 "
-        networked="template:#avatar-template; attachTemplateToLocal:false;"
-        camera
-        wasd-controls
-        look-controls
-      >
-      </a-entity>
+        <a-entity id="player" position="0 1.3 0 "
+            networked="template:#avatar-template; attachTemplateToLocal:false;" camera wasd-controls look-controls>
+        </a-entity>
       <a-sky color="#ECECEC"></a-sky>
     </a-scene>
 
