@@ -9,7 +9,7 @@ let s = window.NAF.schemas
 s.isTemplateTag =  (el) => {
     return el.tagName.toLowerCase() === 'naf-template';
 }
-a.add = (schema) => {
+s.add = (schema) => {
     if (s.validateSchema(schema)) {
       s.schemaDict[schema.template] = schema;
       var templateEl = document.querySelector(schema.template);
@@ -21,7 +21,7 @@ a.add = (schema) => {
         return;
       }
       //
-      s.templateCache[schema.template] = document.importNode(templateEl.content, true);
+      s.templateCache[schema.template] = templateEl;
     } else {
       NAF.log.error('Schema not valid: ', schema);
       NAF.log.error('See https://github.com/haydenjameslee/networked-aframe#syncing-custom-components');
@@ -29,7 +29,7 @@ a.add = (schema) => {
   }
 
 s.getCachedTemplate = (template) =>  {
-    if (!s.templateIsCached(template) || s.templateCache.length==0) {
+    if (!s.templateIsCached(template)) {
         if (s.templateExistsInScene(template)) {
           s.add(s.createDefaultSchema(template));
         } else {
