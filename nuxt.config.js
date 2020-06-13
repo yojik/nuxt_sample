@@ -15,7 +15,9 @@ export default {
       }
     ],
     script: [
-       { src: "https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"} //なぜか必要
+      { src: 'https://cdn.jsdelivr.net/gh/aframevr/aframe@a326cebe05da7541fb885ed0ce8e16facad7d5bd/dist/aframe-master.min.js' },
+      { src: "https://unpkg.com/networked-aframe/dist/networked-aframe.min.js"},
+      { src: "https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"}
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
   },
@@ -69,7 +71,9 @@ export default {
         'a-scene',
         'a-assets',
         'a-camera',
-        'a-entity']
+        'a-entity',
+        'my-template'
+      ]
       }
   }
 
