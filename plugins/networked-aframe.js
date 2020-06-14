@@ -3,8 +3,8 @@
 // import 'networked-aframe'
 
 // schemaに patchを当てる
-let s = window.NAF.schemas 
-s.templateHasOneOrZeroChildren = (el) => { 
+let s = window.NAF.schemas
+s.templateHasOneOrZeroChildren = (el) => {
     return el.childNodes.length < 2
 }
 s.isTemplateTag =  (el) => {
@@ -21,8 +21,9 @@ s.add = (schema) => {
       if (!s.validateTemplate(schema, templateEl)) {
         return;
       }
-      //
-      s.templateCache[schema.template] = document.importNode(templateEl.childNodes[0], true);
+      let template = templateEl.childNodes[0];
+      template.normalize()
+      s.templateCache[schema.template] = document.importNode(template, true);
     } else {
       NAF.log.error('Schema not valid: ', schema);
       NAF.log.error('See https://github.com/haydenjameslee/networked-aframe#syncing-custom-components');
