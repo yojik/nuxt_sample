@@ -4,7 +4,7 @@
     <title>Dev Example — Networked-Aframe</title>
     <meta name="description" content="Dev Example — Networked-Aframe" />
 
-    <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@a326cebe05da7541fb885ed0ce8e16facad7d5bd/dist/aframe-master.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
     <script src="/js/build.js"></script>
     <script>
@@ -24,6 +24,11 @@
     "
       >
         <a-assets>
+
+        <a-asset-item
+          id="floor"
+          src="/low_poly_isometric_rooms/scene.gltf"/>
+
           <img
             id="grid"
             src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png"
@@ -105,6 +110,17 @@
           light="color: #ffaaff; intensity: 1.5"
           position="5 5 5"
         ></a-entity>
+
+        <a-gltf-model
+          position="0 0 -3.0"
+          scale="2 1 2"
+          src="#floor"
+        ></a-gltf-model>
+        <a-text
+          position="-1 1.25 -3"
+          value="Hello, World!"
+          color="green"
+        ></a-text>
 
         <a-sky src="#sky" rotation="0 -90 0"></a-sky>
         <a-entity id="particles" particle-system="preset: snow"></a-entity>
