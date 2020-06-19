@@ -21,7 +21,7 @@ s.add = (schema) => {
       if (!s.validateTemplate(schema, templateEl)) {
         return;
       }
-      let template = templateEl.childNodes[0];
+      let template = templateEl;
       template.normalize()
       s.templateCache[schema.template] = document.importNode(template, true);
     } else {
