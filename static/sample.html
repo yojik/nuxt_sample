@@ -16,12 +16,22 @@
   </head>
   <body>
     <div>
+      <div class="overlayStyle" id="overlay">
+        <div>
+          <h2>networked</h2>
+          <button id="myEnterVRButton" href="#">VR</button>
+          <button id="myEnterARButton" href="#">AR</button>
+          <button id="myEnterARButton" href="#">Exit AR</button>
+        </div>
+      </div>
+
       <a-scene
         networked-scene="
       room: dev;
       debug: true;
       adapter: socketio;
     "
+      vr-mode-ui="enterARButton: #myEnterARButton"
       >
         <a-assets>
 
