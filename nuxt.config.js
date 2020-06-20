@@ -15,10 +15,11 @@ export default {
       }
     ],
     script: [
-      { src: 'https://cdn.jsdelivr.net/gh/aframevr/aframe@a326cebe05da7541fb885ed0ce8e16facad7d5bd/dist/aframe-master.min.js' },
-    //  { src: "https://unpkg.com/networked-aframe/dist/networked-aframe.min.js"},
-     { src: "/js/build.js"},
-      { src: "https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"}
+      { defer:true , async:true,src: "https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"},
+      // { defer:true , async:true, src: 'https://cdn.jsdelivr.net/gh/aframevr/aframe@a326cebe05da7541fb885ed0ce8e16facad7d5bd/dist/aframe-master.min.js' },
+      //{ src: "https://unpkg.com/networked-aframe/dist/networked-aframe.min.js"},
+      //{defer:true ,  async:true,   src: "/js/build.js"}
+
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
   },
@@ -71,9 +72,14 @@ export default {
       ignoredElements: [
         'a-scene',
         'a-assets',
+        "a-asset-item",
+        "a-sphere",
+        "a-gltf-model",
         'a-camera',
         'a-entity',
-        'my-template'
+        "a-text",
+        "a-sky",
+        'naf-template'
       ]
       }
   }

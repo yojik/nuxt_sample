@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="overlayStyle" id="overlay">
-      <div>
-        <h2>networked</h2>
-        <button id="myEnterVRButton" href="#">VR</button>
+      <div  >
+        <h2 >networked</h2>
+        <button  id="myEnterVRButton" href="#">VR</button>
         <button id="myEnterARButton" href="#">AR</button>
         <button id="myEnterARButton" href="#">Exit AR</button>
       </div>
@@ -19,8 +19,9 @@
           id="floor"
           src="/low_poly_isometric_rooms/scene.gltf"
         ></a-asset-item>
+
         <naf-template id="avatar-template">
-          <a-entity class="avatar">
+          <a-entity   class="avatar">
             <a-sphere
               class="head"
               color="#ffffff"
@@ -81,6 +82,8 @@
 </template>
 <script>
 export default {
+  //Aframe network-aframe との組み合わせ
+  //vueとの相性が悪い
   name: "aframe",
   components: {},
   mounted() {}

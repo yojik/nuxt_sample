@@ -854,7 +854,7 @@ class Schemas {
       if (!this.validateTemplate(schema, templateEl)) {
         return;
       }
-      this.templateCache[schema.template] = document.importNode(templateEl.childNodes[0], true);
+      this.templateCache[schema.template] = templateEl.cloneNode(true);
     } else {
       NAF.log.error('Schema not valid: ', schema);
       NAF.log.error('See https://github.com/haydenjameslee/networked-aframe#syncing-custom-components');
@@ -963,7 +963,7 @@ class AdapterFactory {
     } else if (name === 'easyrtc' || name == 'wseasyrtc') {
       throw new Error(
         "Adapter: " +
-          adapterName + 
+          adapterName +
           " not registered. EasyRTC support was removed in Networked-Aframe 0.7.0." +
           " To use the deprecated EasyRTC adapter see https://github.com/networked-aframe/naf-easyrtc-adapter"
         );
@@ -1052,43 +1052,43 @@ class SocketioAdapter {
           self.wsUrl = "ws://" + location.host;
         }
       }
-  
+
       NAF.log.write("Attempting to connect to socket.io");
       const socket = self.socket = io(self.wsUrl);
-  
+
       socket.on("connect", () => {
         NAF.log.write("User connected", socket.id);
         self.myId = socket.id;
         self.joinRoom();
       });
-  
+
       socket.on("connectSuccess", (data) => {
         const { joinedTime } = data;
-  
+
         self.myRoomJoinTime = joinedTime;
         NAF.log.write("Successfully joined room", self.room, "at server time", joinedTime);
 
         self.connectSuccess(self.myId);
       });
-  
+
       socket.on("error", err => {
         console.error("Socket connection failure", err);
         self.connectFailure();
       });
-  
+
       socket.on("occupantsChanged", data => {
         const { occupants } = data;
         NAF.log.write('occupants changed', data);
         self.receivedOccupants(occupants);
       });
-  
+
       function receiveData(packet) {
         const from = packet.from;
         const type = packet.type;
         const data = packet.data;
         self.messageListener(from, type, data);
       }
-  
+
       socket.on("send", receiveData);
       socket.on("broadcast", receiveData);
     })
@@ -1241,7 +1241,7 @@ class WebRtcPeer {
 
     // If there are errors with Safari implement this:
     // https://github.com/OpenVidu/openvidu/blob/master/openvidu-browser/src/OpenViduInternal/WebRtcPeer/WebRtcPeer.ts#L154
-    
+
     if (options.sendAudio) {
       options.localAudioStream.getTracks().forEach(
         track => self.pc.addTrack(track, options.localAudioStream));
@@ -1558,22 +1558,22 @@ class WebrtcAdapter {
           self.wsUrl = "ws://" + location.host;
         }
       }
-  
+
       NAF.log.write("Attempting to connect to socket.io");
       const socket = self.socket = io(self.wsUrl);
-  
+
       socket.on("connect", () => {
         NAF.log.write("User connected", socket.id);
         self.myId = socket.id;
         self.joinRoom();
       });
-  
+
       socket.on("connectSuccess", (data) => {
         const { joinedTime } = data;
-  
+
         self.myRoomJoinTime = joinedTime;
         NAF.log.write("Successfully joined room", self.room, "at server time", joinedTime);
-  
+
         if (self.sendAudio) {
           const mediaConstraints = {
             audio: true,
@@ -1589,18 +1589,18 @@ class WebrtcAdapter {
           self.connectSuccess(self.myId);
         }
       });
-  
+
       socket.on("error", err => {
         console.error("Socket connection failure", err);
         self.connectFailure();
       });
-  
+
       socket.on("occupantsChanged", data => {
         const { occupants } = data;
         NAF.log.write('occupants changed', data);
         self.receivedOccupants(occupants);
       });
-  
+
       function receiveData(packet) {
         const from = packet.from;
         const type = packet.type;
@@ -1611,7 +1611,7 @@ class WebrtcAdapter {
         }
         self.messageListener(from, type, data);
       }
-  
+
       socket.on("send", receiveData);
       socket.on("broadcast", receiveData);
     })
@@ -1863,7 +1863,7 @@ AFRAME.registerComponent('networked-audio-source', {
           this.audioEl.volume = 0; // we don't actually want to hear audio from this element
         }
 
-        const soundSource = this.sound.context.createMediaStreamSource(newStream); 
+        const soundSource = this.sound.context.createMediaStreamSource(newStream);
         this.sound.setNodeSource(soundSource);
         this.el.emit('sound-source-set', { soundSource });
       }
