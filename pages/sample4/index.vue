@@ -3,9 +3,6 @@
     <div class="overlayStyle" id="overlay">
       <div>
         <h2>AR Sample</h2>
-        <button id="myEnterVRButton" href="#">VR</button>
-        <button id="myEnterARButton" href="#">AR</button>
-        <button id="myEnterARButton" href="#">Exit AR</button>
       </div>
     </div>
     <div class="iframe_container">
@@ -32,7 +29,7 @@ export default {
   position: relative;
   width: 100%;
   height: 0;
-  /* padding-top: 45%; */
+  padding-top: 60%;
 }
 .iframe_container iframe {
   position: absolute;

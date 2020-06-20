@@ -327,7 +327,7 @@ naf.options = options;
 naf.utils = utils;
 naf.log = new NafLogger();
 naf.schemas = new Schemas();
-naf.version = "0.6.1";
+naf.version = "0.7.1";
 
 naf.adapters = new AdapterFactory();
 var entities = new NetworkEntities();
@@ -851,10 +851,11 @@ class Schemas {
         NAF.log.error(`Template el not found for ${schema.template}, make sure NAF.schemas.add is called after <a-scene> is defined.`);
         return;
       }
+      templateEl.normalize();
       if (!this.validateTemplate(schema, templateEl)) {
         return;
       }
-      this.templateCache[schema.template] = templateEl.cloneNode(true);
+      this.templateCache[schema.template] = document.importNode(templateEl, true);
     } else {
       NAF.log.error('Schema not valid: ', schema);
       NAF.log.error('See https://github.com/haydenjameslee/networked-aframe#syncing-custom-components');
@@ -869,6 +870,7 @@ class Schemas {
         NAF.log.error(`Template el for ${template} is not in the scene, add the template to <a-assets> and register with NAF.schemas.add.`);
       }
     }
+    console.log(this.templateCache[template])
     return this.templateCache[template].firstElementChild.cloneNode(true);
   }
 
@@ -898,11 +900,8 @@ class Schemas {
   }
 
   validateTemplate(schema, el) {
-    if (this.deprecatedTemplateTag(el)) {
-      NAF.log.error(`The usage of ${el.tagName} is deprecated. We suggest using <naf-template> instead.`)
-    }
     if (!this.isTemplateTag(el)) {
-      NAF.log.error(`Template for ${schema.template} is not a <naf-template> tag. Instead found: ${el.tagName}`);
+      NAF.log.error(`Template for ${schema.template} is not a <template> tag. Instead found: ${el.tagName}`);
       return false;
     } else if (!this.templateHasOneOrZeroChildren(el)) {
       NAF.log.error(`Template for ${schema.template} has more than one child. Templates must have one direct child element, no more. Template found:`, el);
@@ -913,11 +912,11 @@ class Schemas {
   }
 
   isTemplateTag(el) {
-    return ['naf-template', 'template'].indexOf(el.tagName.toLowerCase()) > -1
+    return el.tagName.toLowerCase() === 'template' || el.tagName.toLowerCase() === 'naf-template'
   }
 
   templateHasOneOrZeroChildren(el) {
-    return el.childNodes.length < 2
+    return el.childElementCount < 2;
   }
 
   remove(template) {
@@ -926,10 +925,6 @@ class Schemas {
 
   clear() {
     this.schemaDict = {};
-  }
-
-  deprecatedTemplateTag(el) {
-    return el.tagName.toLowerCase() === 'template'
   }
 }
 
@@ -963,7 +958,7 @@ class AdapterFactory {
     } else if (name === 'easyrtc' || name == 'wseasyrtc') {
       throw new Error(
         "Adapter: " +
-          adapterName +
+          adapterName + 
           " not registered. EasyRTC support was removed in Networked-Aframe 0.7.0." +
           " To use the deprecated EasyRTC adapter see https://github.com/networked-aframe/naf-easyrtc-adapter"
         );
@@ -1052,43 +1047,43 @@ class SocketioAdapter {
           self.wsUrl = "ws://" + location.host;
         }
       }
-
+  
       NAF.log.write("Attempting to connect to socket.io");
       const socket = self.socket = io(self.wsUrl);
-
+  
       socket.on("connect", () => {
         NAF.log.write("User connected", socket.id);
         self.myId = socket.id;
         self.joinRoom();
       });
-
+  
       socket.on("connectSuccess", (data) => {
         const { joinedTime } = data;
-
+  
         self.myRoomJoinTime = joinedTime;
         NAF.log.write("Successfully joined room", self.room, "at server time", joinedTime);
 
         self.connectSuccess(self.myId);
       });
-
+  
       socket.on("error", err => {
         console.error("Socket connection failure", err);
         self.connectFailure();
       });
-
+  
       socket.on("occupantsChanged", data => {
         const { occupants } = data;
         NAF.log.write('occupants changed', data);
         self.receivedOccupants(occupants);
       });
-
+  
       function receiveData(packet) {
         const from = packet.from;
         const type = packet.type;
         const data = packet.data;
         self.messageListener(from, type, data);
       }
-
+  
       socket.on("send", receiveData);
       socket.on("broadcast", receiveData);
     })
@@ -1233,7 +1228,7 @@ class WebRtcPeer {
   }
 
   offer(options) {
-    var self = this;
+    const self = this;
     // reliable: false - UDP
     this.setupChannel(
       this.pc.createDataChannel(this.channelLabel, { reliable: false })
@@ -1241,7 +1236,7 @@ class WebRtcPeer {
 
     // If there are errors with Safari implement this:
     // https://github.com/OpenVidu/openvidu/blob/master/openvidu-browser/src/OpenViduInternal/WebRtcPeer/WebRtcPeer.ts#L154
-
+    
     if (options.sendAudio) {
       options.localAudioStream.getTracks().forEach(
         track => self.pc.addTrack(track, options.localAudioStream));
@@ -1316,8 +1311,8 @@ class WebRtcPeer {
    */
 
   createPeerConnection() {
-    var self = this;
-    var RTCPeerConnection =
+    const self = this;
+    const RTCPeerConnection =
       window.RTCPeerConnection ||
       window.webkitRTCPeerConnection ||
       window.mozRTCPeerConnection ||
@@ -1329,7 +1324,7 @@ class WebRtcPeer {
       );
     }
 
-    var pc = new RTCPeerConnection({ iceServers: WebRtcPeer.ICE_SERVERS });
+    const pc = new RTCPeerConnection({ iceServers: WebRtcPeer.ICE_SERVERS });
 
     pc.onicecandidate = function(event) {
       if (event.candidate) {
@@ -1360,24 +1355,24 @@ class WebRtcPeer {
   }
 
   setupChannel(channel) {
-    var self = this;
+    const self = this;
 
     this.channel = channel;
 
     // received data from a remote peer
     this.channel.onmessage = function(event) {
-      var data = JSON.parse(event.data);
+      const data = JSON.parse(event.data);
       self.messageListener(self.remoteId, data.type, data.data);
     };
 
     // connected with a remote peer
-    this.channel.onopen = function(event) {
+    this.channel.onopen = function(_event) {
       self.open = true;
       self.openListener(self.remoteId);
     };
 
     // disconnected with a remote peer
-    this.channel.onclose = function(event) {
+    this.channel.onclose = function(_event) {
       if (!self.open) return;
       self.open = false;
       self.closedListener(self.remoteId);
@@ -1390,7 +1385,7 @@ class WebRtcPeer {
   }
 
   handleOffer(message) {
-    var self = this;
+    const self = this;
 
     this.pc.ondatachannel = function(event) {
       self.setupChannel(event.channel);
@@ -1413,7 +1408,7 @@ class WebRtcPeer {
   }
 
   handleCandidate(message) {
-    var RTCIceCandidate =
+    const RTCIceCandidate =
       window.RTCIceCandidate ||
       window.webkitRTCIceCandidate ||
       window.mozRTCIceCandidate;
@@ -1445,7 +1440,7 @@ class WebRtcPeer {
   }
 
   setRemoteDescription(message) {
-    var RTCSessionDescription =
+    const RTCSessionDescription =
       window.RTCSessionDescription ||
       window.webkitRTCSessionDescription ||
       window.mozRTCSessionDescription ||
@@ -1558,22 +1553,22 @@ class WebrtcAdapter {
           self.wsUrl = "ws://" + location.host;
         }
       }
-
+  
       NAF.log.write("Attempting to connect to socket.io");
       const socket = self.socket = io(self.wsUrl);
-
+  
       socket.on("connect", () => {
         NAF.log.write("User connected", socket.id);
         self.myId = socket.id;
         self.joinRoom();
       });
-
+  
       socket.on("connectSuccess", (data) => {
         const { joinedTime } = data;
-
+  
         self.myRoomJoinTime = joinedTime;
         NAF.log.write("Successfully joined room", self.room, "at server time", joinedTime);
-
+  
         if (self.sendAudio) {
           const mediaConstraints = {
             audio: true,
@@ -1583,24 +1578,35 @@ class WebrtcAdapter {
           .then(localStream => {
             self.storeAudioStream(self.myId, localStream);
             self.connectSuccess(self.myId);
+            localStream.getTracks().forEach(
+              track => {
+                Object.keys(self.peers).forEach(peerId => { 
+                self.peers[peerId].pc.addTrack(track, localStream) 
+              })
+            })
           })
-          .catch(e => NAF.log.error(e));
+          .catch(e => {
+            NAF.log.error(e);
+            console.error("Microphone is disabled due to lack of permissions");
+            self.sendAudio = false;
+            self.connectSuccess(self.myId);
+          });
         } else {
           self.connectSuccess(self.myId);
         }
       });
-
+  
       socket.on("error", err => {
         console.error("Socket connection failure", err);
         self.connectFailure();
       });
-
+  
       socket.on("occupantsChanged", data => {
         const { occupants } = data;
         NAF.log.write('occupants changed', data);
         self.receivedOccupants(occupants);
       });
-
+  
       function receiveData(packet) {
         const from = packet.from;
         const type = packet.type;
@@ -1611,7 +1617,7 @@ class WebrtcAdapter {
         }
         self.messageListener(from, type, data);
       }
-
+  
       socket.on("send", receiveData);
       socket.on("broadcast", receiveData);
     })
@@ -1630,7 +1636,7 @@ class WebrtcAdapter {
     const self = this;
     const localId = this.myId;
 
-    for (var key in occupants) {
+    for (let key in occupants) {
       const remoteId = key;
       if (this.peers[remoteId]) continue;
 
@@ -1724,7 +1730,7 @@ class WebrtcAdapter {
   }
 
   broadcastData(type, data) {
-    for (var clientId in this.peers) {
+    for (let clientId in this.peers) {
       this.sendData(clientId, type, data);
     }
   }
@@ -1753,14 +1759,14 @@ class WebrtcAdapter {
   }
 
   getMediaStream(clientId) {
-    var that = this;
+    const self = this;
     if (this.audioStreams[clientId]) {
       NAF.log.write("Already had audio for " + clientId);
       return Promise.resolve(this.audioStreams[clientId]);
     } else {
       NAF.log.write("Waiting on audio for " + clientId);
       return new Promise(resolve => {
-        that.pendingAudioRequest[clientId] = resolve;
+        self.pendingAudioRequest[clientId] = resolve;
       });
     }
   }
@@ -1770,11 +1776,11 @@ class WebrtcAdapter {
 
     return fetch(document.location.href, { method: "HEAD", cache: "no-cache" })
       .then(res => {
-        var precision = 1000;
-        var serverReceivedTime = new Date(res.headers.get("Date")).getTime() + (precision / 2);
-        var clientReceivedTime = Date.now();
-        var serverTime = serverReceivedTime + ((clientReceivedTime - clientSentTime) / 2);
-        var timeOffset = serverTime - clientReceivedTime;
+        const precision = 1000;
+        const serverReceivedTime = new Date(res.headers.get("Date")).getTime() + (precision / 2);
+        const clientReceivedTime = Date.now();
+        const serverTime = serverReceivedTime + ((clientReceivedTime - clientSentTime) / 2);
+        const timeOffset = serverTime - clientReceivedTime;
 
         this.serverTimeRequests++;
 
@@ -1863,7 +1869,7 @@ AFRAME.registerComponent('networked-audio-source', {
           this.audioEl.volume = 0; // we don't actually want to hear audio from this element
         }
 
-        const soundSource = this.sound.context.createMediaStreamSource(newStream);
+        const soundSource = this.sound.context.createMediaStreamSource(newStream); 
         this.sound.setNodeSource(soundSource);
         this.el.emit('sound-source-set', { soundSource });
       }
@@ -2385,6 +2391,11 @@ AFRAME.registerComponent('networked', {
     // Avoid updating components if the entity data received did not come from the current owner.
     if (entityData.lastOwnerTime < this.lastOwnerTime ||
           (this.lastOwnerTime === entityData.lastOwnerTime && this.data.owner > entityData.owner)) {
+      return;
+    }
+
+    // Hack to solve this bug: https://github.com/networked-aframe/networked-aframe/issues/200
+    if (this.data === undefined) {
       return;
     }
 
