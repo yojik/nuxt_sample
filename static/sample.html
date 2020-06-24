@@ -11,9 +11,10 @@
     <script src="https://unpkg.com/aframe-particle-system-component@1.0.5/dist/aframe-particle-system-component.min.js"></script>
   </head>
   <body>
+    <!-- WebXRのdom-overlayがinner frameではうまく動かないので、いったんコメントアウト-->
     <!-- <div class="overlayStyle" id="overlay">
       <h2>AR Sample</h2>
-      <button href="#">Test</button>
+      <button href="#" onclick='document.querySelector("#text").setAttribute("value","Title")'>Test</button>
     </div> -->
     <a-scene
       networked-scene="room: dev; debug: true; adapter: socketio;"
