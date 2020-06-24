@@ -1,30 +1,26 @@
 <template>
   <div>
-    <div class="overlayStyle" id="overlay">
-      <div>
-        <h2>AR Sample</h2>
-      </div>
-    </div>
     <div class="iframe_container">
-      <iframe src="/sample.html" />
+      <iframe ref="sample" src="/sample.html" />
     </div>
+    <button @click="setTitle">テスト</button>
   </div>
 </template>
 <script>
 export default {
   name: "aframe",
   components: {},
-  mounted() {}
+  mounted() {},
+  methods: {
+    setTitle() {
+        console.log(this.$refs)
+      this.$refs.sample.contentDocument.querySelector("#text").setAttribute("value","Title")
+    }
+  }
 };
 </script>
 
 <style>
-.overlayStyle {
-  position: absolute;
-  top: 0px;
-  z-index: 1;
-}
-
 .iframe_container {
   position: relative;
   width: 100%;
