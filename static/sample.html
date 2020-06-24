@@ -16,6 +16,9 @@
       <h2>AR Sample</h2>
       <button href="#" onclick='document.querySelector("#text").setAttribute("value","Title")'>Test</button>
     </div> -->
+    <!-- <div class="overlayStyle" id="overlay">
+      <iframe src="/test.html"> </iframe>
+    </div> -->
     <a-scene
       networked-scene="room: dev; debug: true; adapter: socketio;"
       webxr="optionalFeatures: dom-overlay; overlayElement: #overlay"
@@ -137,6 +140,10 @@
           0,
           0.8
         ); /* backgroundでalpha設定(4番目の引数) */
+      }
+      .overlayStyle iframe {
+        width: 100px;
+        height: 100px;
       }
 
       .github-corner:hover .octo-arm {
