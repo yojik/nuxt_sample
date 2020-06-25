@@ -82,8 +82,6 @@
 </template>
 <script>
 export default {
-  //Aframe network-aframe との組み合わせ
-  //vueとの相性が悪い
   name: "aframe",
   components: {},
   mounted() {}

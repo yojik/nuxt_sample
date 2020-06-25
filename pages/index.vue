@@ -20,8 +20,8 @@
           GitHub
         </a>
         <!-- <nuxt-link class="button--grey" to="/sample">Sample</nuxt-link>
-        <nuxt-link class="button--grey" to="/sample2">Sample2</nuxt-link>
-        <nuxt-link class="button--grey" to="/sample3">Sample3</nuxt-link> -->
+        <nuxt-link class="button--grey" to="/sample2">Sample2</nuxt-link>-->
+        <nuxt-link class="button--grey" to="/sample3">Sample3</nuxt-link>
         <nuxt-link class="button--grey" to="/sample4">Sample4</nuxt-link>
         <a  class="button--grey" href="/sample.html">static</a>
       </div>
