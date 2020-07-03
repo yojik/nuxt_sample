@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "server": "npm run build && node ./server/index.js",
-    "dev": "nuxt",
+    "dev": "nuxt && node ./server/index.js",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
@@ -27,12 +27,13 @@
   "devDependencies": {
     "@nuxtjs/eslint-config": "^2.0.0",
     "@nuxtjs/eslint-module": "^1.0.0",
+    "@vue/test-utils": "^1.0.0-beta.27",
     "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.1.0",
     "eslint": "^6.1.0",
     "eslint-plugin-nuxt": ">=0.4.2",
-    "@vue/test-utils": "^1.0.0-beta.27",
-    "babel-jest": "^24.1.0",
     "jest": "^24.1.0",
+    "nodemon": "^2.0.4",
     "vue-jest": "^4.0.0-0"
   }
 }
