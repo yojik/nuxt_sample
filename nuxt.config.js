@@ -66,7 +66,10 @@ export default {
      */
     extend(config, ctx) {}
   },
-
+  serverMiddleware: [
+    // API middleware
+    '~/api/index.js'
+  ],
   vue: {
     config: {
       ignoredElements: [

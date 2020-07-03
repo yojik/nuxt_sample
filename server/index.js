@@ -48,7 +48,6 @@ io.on("connection", socket => {
         occupants: {},
       };
     }
-
     const joinedTime = Date.now();
     rooms[room].occupants[socket.id] = joinedTime;
     curRoom = room;
